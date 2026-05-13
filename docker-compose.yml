@@ -1,0 +1,135 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend Server
+  ids-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ids-api-server
+    command: python -m uvicorn src.ids_api_server:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./:/app
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - ids-network
+    depends_on:
+      - postgres-db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Streamlit UI
+  ids-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ids-dashboard
+    command: streamlit run streamlit_app/app.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./:/app
+      - ./models:/app/models
+      - ./data:/app/data
+    networks:
+      - ids-network
+    depends_on:
+      - ids-api
+    restart: unless-stopped
+
+  # PostgreSQL Database (for threat logging)
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: ids-postgres
+    environment:
+      POSTGRES_DB: ids_database
+      POSTGRES_USER: ids_user
+      POSTGRES_PASSWORD: ids_secure_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ids-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ids_user -d ids_database"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache (for real-time alerts)
+  redis-cache:
+    image: redis:7-alpine
+    container_name: ids-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - ids-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Prometheus Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ids-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - ids-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+
+  # Grafana Dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ids-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - ids-network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  redis-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  ids-network:
+    driver: bridge
