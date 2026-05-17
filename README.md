@@ -1,7 +1,3 @@
-<!-- # Intrusion-Detection-System
-A Machine Learning-based Intrusion Detection System designed to detect and classify malicious network activities and cyber attacks. The project analyzes network traffic data to identify suspicious behavior, improve cybersecurity, and prevent unauthorized access using intelligent prediction models and real-time monitoring techniques. -->
-
-
 # Intrusion Detection System
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python)
@@ -21,4 +17,4 @@ A Machine Learning-based Intrusion Detection System designed to detect and class
 ---
 
 ## 📌 Project Overview
-This project is a Machine Learning based Intrusion Detection System designed to detect malicious network traffic and classify attacks efficiently using trained ML models.
+A Machine Learning-based Intrusion Detection System designed to detect and classify malicious network activities and cyber attacks. The project analyzes network traffic data to identify suspicious behavior, improve cybersecurity, and prevent unauthorized access using intelligent prediction models and real-time monitoring techniques.
