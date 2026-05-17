@@ -21,3 +21,12 @@ data/
 
 # VS Code
 .vscode/
+
+models/
+*.pkl
+*.joblib
+*.h5
+*.pt
+venv/
+__pycache__/
+datasets/
