@@ -25,4 +25,5 @@ black==24.3.0
 pytest==7.4.2
 
 # Notes: adjust versions if your environment requires different Python compatibility
-streamlit-lottie
+streamlit-lottieshap
+streamlit-autorefresh
