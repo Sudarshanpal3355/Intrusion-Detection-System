@@ -217,3 +217,145 @@ Export analyzed network traffic for further investigation.
                     ┌─────────────────────┐
                     │  Security Report    │
                     └─────────────────────┘
+
+
+# 📊 Dashboard Modules
+
+| Module | Description |
+|---|---|
+| 🏠 **Home** | Security overview, traffic metrics and visualization |
+| 📊 **Prediction** | Upload CSV and perform network threat prediction |
+| 🛡️ **Live Monitoring** | Monitor simulated network activity |
+| 🔍 **Explainability** | Understand model prediction factors |
+| 📥 **Reports** | Download analyzed traffic results |
+
+---
+
+# 🧠 Machine Learning Pipeline
+
+### 1️⃣ Data Input
+
+Network traffic data from the **UNSW-NB15** dataset.
+
+### 2️⃣ Preprocessing
+
+Network features are transformed using the project's preprocessing pipeline.
+
+### 3️⃣ Feature Selection
+
+Relevant features are selected before sending the data to the trained model.
+
+### 4️⃣ Prediction
+
+The trained intrusion-detection model generates prediction probabilities.
+
+### 5️⃣ Risk Scoring
+
+The prediction probability is converted into a security risk level.
+
+### 6️⃣ Visualization
+
+Results are displayed through interactive charts and security metrics.
+
+### 7️⃣ Explainability
+
+SHAP-based analysis helps interpret model predictions.
+
+---
+
+# 🛠️ Technology Ecosystem
+
+## 💻 Core
+
+| Technology | Purpose |
+|---|---|
+| 🐍 **Python** | Core programming language |
+| 🧠 **Scikit-learn** | Machine learning |
+| 🤖 **TensorFlow** | Deep learning |
+| 🐼 **Pandas** | Data processing |
+| 🔢 **NumPy** | Numerical computation |
+
+## 📊 Visualization
+
+| Technology | Purpose |
+|---|---|
+| 📈 **Plotly** | Interactive visualizations |
+| 📊 **Matplotlib** | Data visualization |
+| 🎨 **Seaborn** | Statistical visualization |
+
+## 🛡️ Cybersecurity
+
+| Technology | Purpose |
+|---|---|
+| 🕵️ **Scapy** | Network packet analysis |
+| 🔍 **SHAP** | Explainable AI |
+| 🚨 **IDS Pipeline** | Network threat detection |
+
+## 🌐 Application & Deployment
+
+| Technology | Purpose |
+|---|---|
+| ⚡ **Streamlit** | Interactive web application |
+| 🌐 **Flask** | Web/API support |
+| ☁️ **Streamlit Cloud** | Cloud deployment |
+
+---
+
+# 🔄 End-to-End Detection Flow
+
+```text
+┌──────────────────────────────┐
+│     🌐 Network Traffic       │
+│        / CSV Input           │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│      ⚙️ Preprocessing        │
+│   Encoding + Scaling         │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│      🎯 Feature Selection    │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│       🧠 ML Prediction       │
+│    Trained IDS Model         │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│      📊 Threat Probability   │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│       🚨 Risk Scoring        │
+└──────────────┬───────────────┘
+               │
+        ┌──────┼──────┐
+        ▼      ▼      ▼
+      🟢 LOW 🟡 MEDIUM 🔴 HIGH
+        │      │      │
+        └──────┼──────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│       📊 Security Dashboard  │
+└──────────────┬───────────────┘
+               │
+        ┌──────┴──────┐
+        ▼             ▼
+┌──────────────┐ ┌──────────────┐
+│ 🛡️ Live      │ │ 🔍 SHAP      │
+│ Monitoring   │ │ Explainability│
+└──────────────┘ └──────────────┘
+        │             │
+        └──────┬──────┘
+               ▼
+┌──────────────────────────────┐
+│       📥 Security Report     │
+└──────────────────────────────┘
