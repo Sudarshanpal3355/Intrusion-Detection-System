@@ -17,13 +17,10 @@ data/
 *.h5
 *.pt
 *.pth
-*.pkl
 
 # VS Code
 .vscode/
 
-models/
-*.pkl
 *.joblib
 *.h5
 *.pt
