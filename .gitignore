@@ -27,3 +27,17 @@ data/
 venv/
 __pycache__/
 datasets/
+
+# Large training artifacts - do not upload to GitHub
+models/X_test.pkl
+models/X_train.pkl
+models/X_train_augmented.pkl
+models/y_test.pkl
+models/y_train.pkl
+models/y_train_augmented.pkl
+models/baseline_model.pkl
+models/categorical_cols.pkl
+models/categorical_values.pkl
+models/class_weights.pkl
+models/test_anomaly_scores.pkl
+models/train_anomaly_scores.pkl
