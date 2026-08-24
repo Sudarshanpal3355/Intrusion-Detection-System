@@ -43,14 +43,31 @@ st.markdown("""
 st.markdown("<div class='main-title'>📊 Network Traffic Prediction Dashboard</div>", unsafe_allow_html=True)
 st.markdown("---")
 
+# # ============================
+# # Load Artifacts
+# # ============================
+# @st.cache_resource
+# def load_artifacts():
+#     model = load("models/final_ids_model.pkl")
+#     preprocessor = load("models/encoder_scaler.pkl")
+#     selector = load("models/feature_selector.pkl")
+#     return model, preprocessor, selector
+
+# model, preprocessor, selector = load_artifacts()
+
 # ============================
 # Load Artifacts
 # ============================
 @st.cache_resource
 def load_artifacts():
-    model = load("models/final_ids_model.pkl")
-    preprocessor = load("models/encoder_scaler.pkl")
-    selector = load("models/feature_selector.pkl")
+    model_path = os.path.join(ROOT_DIR, "models", "final_ids_model.pkl")
+    preprocessor_path = os.path.join(ROOT_DIR, "models", "encoder_scaler.pkl")
+    selector_path = os.path.join(ROOT_DIR, "models", "feature_selector.pkl")
+
+    model = load(model_path)
+    preprocessor = load(preprocessor_path)
+    selector = load(selector_path)
+
     return model, preprocessor, selector
 
 model, preprocessor, selector = load_artifacts()
