@@ -92,7 +92,7 @@ fig.update_layout(
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("<div class='glass'>", unsafe_allow_html=True)
-st.plotly_chart(fig, width="stretch")
+st.plotly_chart(fig, use_container_width=True)
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================
@@ -110,6 +110,6 @@ table_df = pd.DataFrame({
     "Status": np.random.choice(["Allowed", "Blocked"], 10)
 })
 
-st.dataframe(table_df, width="stretch")
+st.dataframe(table_df, use_container_width=True)
 
 st.markdown("</div>", unsafe_allow_html=True)

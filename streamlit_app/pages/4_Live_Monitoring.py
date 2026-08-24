@@ -10,6 +10,7 @@ if ROOT_DIR not in sys.path:
 # IMPORTS
 # ============================
 import time
+import base64
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -29,12 +30,22 @@ st.markdown("## 🛡️ AI Cyber Defense Platform")
 # AUDIO ENGINE
 # ============================
 def play_sound(path):
-    if os.path.exists(path):
+    abs_path = os.path.join(ROOT_DIR, path)
+    if os.path.exists(abs_path):
+        with open(abs_path, "rb") as audio_file:
+            b64_audio = base64.b64encode(audio_file.read()).decode("utf-8")
+
         components.html(
             f"""
-            <audio autoplay>
-                <source src="{path}" type="audio/mp3">
+            <audio id="alert-audio" autoplay>
+                <source src="data:audio/mp3;base64,{b64_audio}" type="audio/mp3">
             </audio>
+            <script>
+                const audio = document.getElementById("alert-audio");
+                if (audio) {{
+                    audio.play().catch(() => {{}});
+                }}
+            </script>
             """,
             height=0,
         )
@@ -226,7 +237,8 @@ st.progress(min(prob,1.0))
 chart_df = pd.DataFrame(st.session_state.logs)
 if not chart_df.empty:
     fig = px.line(chart_df, y="Confidence", title="Threat Confidence Timeline")
-    st.plotly_chart(fig, width="stretch")
+    # st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 # ============================
 # 🧠 SHAP MODULE (FINAL SAFE VERSION)
@@ -285,7 +297,8 @@ if state != "CALM":
             title="Top Feature Contributions"
         )
 
-        st.plotly_chart(fig_local, width="stretch")
+        # st.plotly_chart(fig_local, width="stretch")
+        st.plotly_chart(fig_local, use_container_width=True)
 
         # ----------------------------
         # WATERFALL

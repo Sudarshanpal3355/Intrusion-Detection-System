@@ -85,7 +85,8 @@ if st.button("🧠 Generate AI Security Analysis"):
             'bar': {'color': "red" if score > 85 else "orange"},
         }
     ))
-    st.plotly_chart(fig, width="stretch")
+    # st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     # ==============================
     # THREAT TIMELINE
@@ -97,7 +98,8 @@ if st.button("🧠 Generate AI Security Analysis"):
 
     fig2 = px.line(timeline_data, x="Time", y="Threat Level",
                    title="Threat Escalation Timeline")
-    st.plotly_chart(fig2, width="stretch")
+    # st.plotly_chart(fig2, width="stretch")
+    st.plotly_chart(fig2, use_container_width=True)
 
     # ==============================
     # MAIN CONTENT

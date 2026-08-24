@@ -79,7 +79,8 @@ if uploaded_file:
     df = pd.read_csv(uploaded_file)
 
     st.markdown("### 📄 Uploaded Data Preview")
-    st.dataframe(df.head(), width="stretch")
+    # st.dataframe(df.head(), width="stretch")
+    st.dataframe(df.head(), use_container_width=True)
 
     if st.button("🚀 Run AI Traffic Analysis"):
 
@@ -131,7 +132,9 @@ if uploaded_file:
             values="Count",
             title="Threat Risk Distribution"
         )
-        st.plotly_chart(fig, width="stretch")
+        # st.plotly_chart(fig, width="stretch")
+
+        st.plotly_chart(fig, use_container_width=True)
 
         # ============================
         # Probability Histogram
@@ -142,7 +145,8 @@ if uploaded_file:
             nbins=20,
             title="Threat Probability Distribution"
         )
-        st.plotly_chart(fig2, width="stretch")
+        # st.plotly_chart(fig2, width="stretch")
+        st.plotly_chart(fig2, use_container_width=True)
 
         # ============================
         # Suspicious Records Table
@@ -152,7 +156,12 @@ if uploaded_file:
         high_risk_df = df[df["Risk_Level"]=="High"]
 
         if len(high_risk_df) > 0:
-            st.dataframe(high_risk_df.head(20), width="stretch")
+            # st.dataframe(high_risk_df.head(20), width="stretch")
+            st.dataframe(
+                high_risk_df.head(20),
+                use_container_width=True,
+                hide_index=True
+            )
             st.error("High-risk malicious traffic detected!")
         else:
             st.success("No high-risk traffic detected.")

@@ -6,7 +6,9 @@ df = pd.read_csv("data/UNSW_NB15_training-set.csv")
 
 st.subheader("Attack Distribution")
 fig = px.pie(df, names="label")
-st.plotly_chart(fig, width="stretch")
+# st.plotly_chart(fig, width="stretch")
+
+st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("Dataset Preview")
 st.dataframe(df.head(100))
